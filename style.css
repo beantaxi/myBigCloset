@@ -27,7 +27,14 @@ div{
   display: block;
 }
 
-#footer{
-  text-align: center;
-  color:black;
+.standardForm
+{
+	background-color: white;
+}
+
+#footer{  
+	bottom: 20px;
+	color:black;
+	position: fixed;
+	text-align: center;
 }
