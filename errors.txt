@@ -1,0 +1,4 @@
+1. Form validation: format of birthdate and phone number. possibly validate address - give city choices after state is chosen
+2. We need to prepare the queries
+3. oh, verify email stuff- send an email to click on link to verify?
+4. 
