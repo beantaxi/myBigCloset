@@ -9,17 +9,19 @@ class Dao
 {
 	public $pdo;
 	private $debug;
-	
+
 	function __construct ($debug=0)
 	{
 		$this->debug = $debug;
 		$this->connect();
 	}
-	
-	
+
+
 	function connect ()
 	{
-		$dsn = "uri:file:///s/cygwin64/home/Chrissy/public_html/storage/dsn.php";
+		global $DSN;
+
+		$dsn = $DSN;
 		$username = "chez";
 		$password = "chez";
 		$this->pdo = new PDO($dsn, $username, $password);
@@ -40,10 +42,22 @@ class Dao
 		$rs = query($this->pdo, $sql, $this->debug);
 		while ($row = $rs->fetch(PDO::FETCH_ASSOC))
 		{
-			$items[] = $row;	
+			$items[] = $row;
 		}
 
 		return $items;
+	}
+
+	// get all items for a specific user
+	function getUser ($idUser)
+	{
+		$user = array();
+
+		$sql = "SELECT * FROM user WHERE uid=$idUser";
+		$rs = query($this->pdo, $sql, $this->debug);
+		$user = $rs->fetch(PDO::FETCH_ASSOC);
+
+		return $user;
 	}
 }
 ?>

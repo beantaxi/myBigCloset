@@ -18,13 +18,13 @@ body {
     color: black;
     }
 
+div{
+  display: block;
+}
+
 element.style{
   height: 100%;
   background-color: #dddddd;
-}
-
-div{
-  display: block;
 }
 
 .standardForm
@@ -37,4 +37,10 @@ div{
 	color:black;
 	position: fixed;
 	text-align: center;
+}
+
+#header
+{
+	font-size: 20pt;
+	padding: 10px 0px 10px 0px;
 }

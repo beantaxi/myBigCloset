@@ -1,4 +1,3 @@
-
 <?php
 // Title: common.inc
 // Date: June 24th 2014
@@ -6,7 +5,8 @@
 // Purpose: Commonly used functions for MBC
 // ----------------------------------------
 
-
+$DSN = "uri:file:///" . dirname(__FILE__) . "/dsn.php";
+$debug = 1;
 function connect ($dsn, $username, $password, $debug = 0)
 {
 	$pdo = new PDO($dsn, $username, $password);

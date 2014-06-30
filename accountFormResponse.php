@@ -7,15 +7,12 @@ PURPOSE:-->
 
 <?php
 require_once("common.inc");
-if (!connect(1)){
-   error(mysql_error(), mysql_errno());
-}else{
-   echo "Successfully Connected";
-  
-   //extract user id from URL
-   $id = $_GET['id'];
-}
-
+require_once("Dao.cls.php");
+$dao = new Dao($debug);
+$pdo = $dao->pdo;
+//extract user id from URL
+$id = $_GET['id'];
+$user = $dao->getUser($id);
 ?>
 
 <html>
@@ -27,30 +24,29 @@ if (!connect(1)){
 </head>
 <body>
 
-  <div class style="background-color: white; position: absolute; width: 80%;"/>
+<div class style="background-color: white; position: absolute; width: 80%;"/>
 
-  <?php
-     if (!$id)
-     {
-        echo "User not created<br/>";
-     }
-     else
-     {
+<?php
+if (!$id)
+{
+	echo "User not created<br/>";
+}
+else
+{
 	echo "Created new user (id=$id)<br/>";
-        //from the user table, get the first name of the person who just made an account using their uid
-        $para = 'first';
-        $table = 'user';
-        $firstName = getResult($id,$para,$table);
-        echo "Hi $firstName! Welcome to the Family!<br>";
-        echo "<a href='profile.php?id=$id'>Visit your Profile page!</a>"; //link to profile page with id included in URL
-     }
-  ?>
+	//from the user table, get the first name of the person who just made an account using their uid
+	$para = 'first';
+	$table = 'user';
+	echo "Hi $user->first! Welcome to the Family!<br>";
+	echo "<a href='profile.php?id=$id'>Visit your Profile page!</a>"; //link to profile page with id included in URL
+}
+?>
 
-  
+
 
   <div id="footer">
     <p>(c) Chris & Cheese
-  </div> 
+  </div>
 
 </body>
 </html>

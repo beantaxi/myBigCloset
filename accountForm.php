@@ -15,6 +15,10 @@ PURPOSE: Form and listeners to create an account
 </head>
 <body>
 
+	<div id='header'>
+		Join The Family!
+	</div>
+
 	<div class='content'>
 		<form class='standardForm' method="post" action="accountFormAction.php">
 			<table>
@@ -86,7 +90,7 @@ PURPOSE: Form and listeners to create an account
 				<tr> <td>Zip Code</td> <td><input required="" type="text" name="zip"></td> </tr>
 				<tr> <td>Create a Password</td> <td><input required="" type="password" name="pw" value='password'></td> </tr>
 				<tr> <td>Confirm Password</td> <td><input required="" type="password" name="pwConf" value='password'></td> </tr>
-				<tr> <td><input type="reset"></td> <td><input type="submit" value="Submit"></td> </tr>
+				<tr> <td></td> <td><input type="submit" value="Submit"> <input type="reset"></td> </tr>
 			</table>
 		</form>
 	</div>

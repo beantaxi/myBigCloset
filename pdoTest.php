@@ -15,11 +15,9 @@ try
 
 <b>connect</b><br/>
 <?php
-// $dsn = "uri:file:///s/cygwin64/home/Chrissy/public_html/storage/dsn.php";
-$dsn = "uri:file:///home/Chrissy/public_html/storage/dsn.php";
 $username = "chez";
 $password = "chez";
-$pdo = connect($dsn, $username, $password, $debug);
+$pdo = connect($DSN, $username, $password, $debug);
 ?>
 OK!
 <br/><p/>
