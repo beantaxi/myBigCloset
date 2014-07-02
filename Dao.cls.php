@@ -33,13 +33,21 @@ class Dao
 	}
 
 
+	function getItem ($idItem, $sql, $debug=0)
+	{
+		$sql = "SELECT * FROM item WHERE iid=$idItem";
+		$item = queryRow($this->pdo, $sql, $debug);
+		return $item;
+	}
+
+
 	// get all items for a specific user
-	function getItems ($idUser)
+	function getItems ($idUser, $debug=0)
 	{
 		$items = array();
 
 		$sql = "SELECT * FROM item WHERE uid=$idUser";
-		$rs = query($this->pdo, $sql, $this->debug);
+		$rs = query($this->pdo, $sql, $debug);
 		while ($row = $rs->fetch(PDO::FETCH_ASSOC))
 		{
 			$items[] = $row;
@@ -47,6 +55,7 @@ class Dao
 
 		return $items;
 	}
+
 
 	// get all items for a specific user
 	function getUser ($idUser)
