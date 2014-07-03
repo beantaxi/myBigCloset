@@ -32,6 +32,13 @@ element.style{
 	background-color: white;
 }
 
+#content
+{
+	background-color: white; 
+	width: 80%;
+}
+
+
 #footer{  
 	bottom: 20px;
 	color:black;

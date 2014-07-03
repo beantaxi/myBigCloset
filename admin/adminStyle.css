@@ -1,0 +1,41 @@
+/*
+FILE NAME: adminStyle.css
+WRITTEN BY: Chris
+WHEN: July 3 2014
+PURPOSE: style for admin pages
+*/ 
+
+body 
+{
+	text-align: left;
+	margin: auto;
+	font-size: 16px;
+	font-family: Garamond;
+	line-height: 23px;
+	font-weight: 400;
+	background-color: gray;
+	width: 80%;
+	color: black;
+}
+
+
+#content
+{
+	background-color: white; 
+	width: 80%;
+}
+
+
+#footer
+{
+	bottom: 20px;
+	color:black;
+	position: fixed;
+	text-align: center;
+}
+
+#header
+{
+	font-size: 20pt;
+	padding: 10px 0px 10px 0px;
+}

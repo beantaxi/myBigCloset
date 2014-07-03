@@ -18,7 +18,12 @@ PURPOSE: homepage for storage
 
 <div class style="background-color: white; position: absolute; width: 80%; border:"/>
 
-<a href="http://www.ooc2000.com/storage/accountForm.php">hi. link to create and account for MY BIG CLOSET</a>
+hi.
+<br/><p/>
+<br/><p/>
+<br/><p/>
+<a href="accountForm.php">create an account for MY BIG CLOSET</a><br/>
+<a href="signInForm.php">sign into MY BIG CLOSET</a><br/>
 
 
 <div id="footer">

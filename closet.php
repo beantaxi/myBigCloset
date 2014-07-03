@@ -9,24 +9,32 @@ PURPOSE: where user views items in their closet
 
 <?php
 require_once("Dao.cls.php");
+$debug = 0;
 $dao = new Dao($debug);
-$id = $_GET['id'];
-$user = $dao->getUser($id);
-$firstName = $user['first'];
-$items = $dao->getItems($id);
+$uid = $_GET['id'];
+$user = $dao->getUser($uid, $debug);
+$items = $dao->getItems($uid, $debug);
 $nItems = count($items);
+$title = "$user->first's Closet";
 ?>
 
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title> <?php echo "$firstName's Closet" ?> </title>
+	<title> <?= $title ?> </title>
 	<link type="text/css" href="style.css" rel="stylesheet"/>
 	<link rel="shortcut icon" href="greenHanger.jpg">
 </head>
 <body>
 	<div id='header'>
-	<?php echo $firstName ?>'s Closet<br/><p/>
+		<?= $title ?>
+		<?php
+		if ($user)
+		{
+			echo "<a href='cart.php?id=$uid'>View Cart</a>";
+		}
+		?>
+		<br/><p/>
 	</div>
 
 	<div class style="background-color: white; width: 80%;"/>
@@ -36,21 +44,25 @@ $nItems = count($items);
 	//for all items
 	foreach ($items as $item)
 	{
-
 		//get name, description, item id and print them out in table form
-		$name = $item['name'];
-		$description = $item['description'];
-		$iid = $item['iid'];
-		$cartLink = "addToCart.php?id=$id&iid=$iid";
-		echo "<tr> <td> <img src='greenHanger.jpg' alt='Item Image' height='42' width='42'></td>".
-		     "<td>Item</td> <td>$iid</td> <td><b>$name</b></td> <td>$description</td>".
-		     "<td><a href='$cartLink'>Add to Cart</a></td></tr>";
+		$cartLink = "addToCart.php?id=$uid&iid=$item->iid";
+		?>
+		<tr> 
+			<td> <?= "<img src='$item->photo' alt='Item Image' height='42' width='42'/>" ?></td>
+			<td>Item</td>
+			<td><?= $item->iid ?></td>
+			<td><b><?= $item->name ?></b></td>
+			<td><?= $item->description ?></td>
+		   <td><?= $item->isShipped ? "Shippped!" : "" ?></td>
+		   <td><?= !$item->isShipped ? "<a href='$cartLink'>Add to Cart</a>" : "" ?></td>
+		</tr>
+	<?php	    
 	}
 	?>
 	</table>
 
 	<!-- link to profile page -->
-	<a href='profile.php?id=<?php echo $id?>'>Return to your Profile</a><br>
+	<a href='profile.php?id=<?php echo $uid?>'>Return to your Profile</a><br>
 
 
 	<div id="footer">

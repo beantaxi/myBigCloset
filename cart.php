@@ -9,45 +9,43 @@ PURPOSE: the cart for items a user wants delivered to them/to be picked up?
 
 <?php
 require_once("Dao.cls.php");
-$dao = new Dao();
+$debug = 0;
+$dao = new Dao($debug);
 //extract user id and iid from URL
-$id = $_GET['id']; //user id
-$iid = $_GET['iid']; //item id
-$user = $dao->getUser($id);
-$firstName = $user['first'];
+$uid = $_GET['id']; //user id
+$user = $dao->getUser($uid, $debug);
+$cart = $dao->getCart($uid, $debug);
+$title = "$user->first's Cart";
 ?>
 
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title> <?php echo $firstName."'s Cart" ?> </title>
+	<title> <?= $title ?></title>
 	<link type="text/css" href="style.css" rel="stylesheet"/>
 	<link rel="shortcut icon" href="greenHanger.jpg">
 </head>
 <body>
-
-   <div class style="background-color: white; width: 80%;"/>
-   <?php
-
-	echo "$firstName's Cart";
-
-	$item = $dao->getItem($iid, $debug);
-
-	echo "<table>";
-	//for all items
-	//get name, description, item id and print them out in table form
-	$name = $item['name'];
-	$description = $item['description'];
-	$iid = $item['iid'];
-	$cartLink = "<a href='cart.php?id=$id&iid=$iid'>Add item to your cart</a>";
-	echo "<tr> <td> <img src='greenHanger.jpg' alt='Item Image' height='42' width='42'></td>".
-		 "<td>Item</td> <td>$iid</td> <td><b>$name</b></td> <td>$description</td>".
-		 "<td>$cartLink</td></tr>";
-	echo "</table>";
-
-	echo "<a href='closet.php?id=$id'>Return to your Closet</a><br>"; //return to Closet
-
-   ?>
+	<div id='header'>
+			<?= $title ?>
+			<br/><p/>
+	</div>
+   <div id='content'>
+		<form class='standardForm' action='shipCartAction.php' method='post'>
+			<table>
+			<?php
+			foreach ($cart as $item)
+			{
+				echo "<tr> <td><img src='$item->photo' alt='Item Image' height='42' width='42'/></td> <td>$item->name</td> <td>$item->description</td> </tr>";
+			}
+			?>
+			</table>
+			<input type='submit' value='Ship It!'/>
+			<input type='hidden' name='uid' value='<?= $uid ?>'/>
+		</form>
+		<br/><p/>
+		<?= "<a href='closet.php?id=$uid'>Return to your Closet</a>" ?><br> <!-- return to Closet -->
+	</div>
 
    <div id="footer">
      <p>(c) Chris & Cheese

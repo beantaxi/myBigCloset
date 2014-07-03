@@ -36,6 +36,48 @@ echo("</pre>");
 OK!
 <br/><p/>
 
+
+<b>validateUser()</b><br/>
+<?php
+$user = $dao->validateUser("beantaxi@gmail.com", "password");
+?>
+<pre>
+Name=<?= "$user->first $user->last" ?>
+
+Email=<?=$user->email?>
+
+ID=<?=$user->uid?>
+</pre>
+OK!
+<br/><p/>
+
+<b>getCart()</b><br/>
+<?php
+$cart = $dao->getCart(26);
+$nItems = count($cart);
+?>
+<pre>
+<?= $nItems ?> item(s)
+<table>
+<?php
+foreach ($cart as $item)
+{
+?>
+	<tr>
+		<td><?= $item->name ?></td>
+		<td><?= $item->description ?></td>
+	</tr>
+<?php
+}
+?>
+</table>
+</pre>
+OK!
+<br/><p/>
+
+
+
+
 <?php
 }
 catch (Exception $ex)

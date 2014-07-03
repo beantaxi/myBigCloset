@@ -18,6 +18,18 @@ function connect ($dsn, $username, $password, $debug = 0)
 	return $pdo;
 }
 
+
+function printCart ($cart)
+{
+	echo "<table>";
+	foreach ($cart as $item)
+	{
+		echo "<tr> <td>$item->name</td> <td>$item->description</td> </tr>";
+	}
+	echo "</table>";
+}
+
+
 /*
 // get all items for a specific user
 function getItems ($pdo, $idUser, $debug=0)
@@ -53,18 +65,19 @@ function getResult2($para, $table, $where, $id){
 //runs the sql input and checks for errors if second argument is supplied as '1', default second arg is '0'
 //returns the entire result set
 function query ($pdo, $sql, $debug=0){
-  if ($debug){
-    echo "sql=$sql<br/>";
-  }
-  $rs = $pdo->query($sql);
-  return $rs;
+	if ($debug)
+	{
+		echo "<pre>sql=$sql</pre>";
+	}
+	$rs = $pdo->query($sql);
+	return $rs;
 }
 
 //runs the sql input and checks for errors if second argument is supplied as '1', default second arg is '0'
 //returns a single row from the result set
 function queryRow ($pdo, $sql, $debug=0){
   $rs = query($pdo, $sql, $debug);
-  $row = $rs->fetch(PDO::FETCH_ASSOC);
+  $row = $rs->fetch(PDO::FETCH_OBJ);
   return $row;
 }
 
