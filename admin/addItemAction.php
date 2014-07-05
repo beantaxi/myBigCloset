@@ -1,57 +1,78 @@
 <?php
+session_start();
 require("../Dao.cls.php");
 $name = $_POST['name'];
-$uid = 26;
-$description = $_POST['description'];
-$filename = $_FILES['photo']['name'];
-$tmp_name = $_FILES['photo']['tmp_name'];
-$size = $_FILES['photo']['size'];
-$type = $_FILES['photo']['type'];
-$error = $_FILES['photo']['error'];
-$parent = "../photos/$uid";
-if (!file_exists($parent))
-{
-	mkdir($parent);
-}
-$destFileName = tempnam($parent, "") . ".$filename";
-move_uploaded_file($tmp_name, $destFileName);
-
-echo "destFileName=$destFileName";
-$parent = realpath("..");
-echo "parent=$parent";
-$nParent = strlen($parent);
-echo "nParent=$nParent";
-$photoPath = substr($destFileName, $nParent);
-echo "photoPath=$photoPath";
-
-$sql = "INSERT INTO item set uid=:uid, name=:name, description=:description, photo=:photo";
-$dao = new Dao($debug);
-$stmt = $dao->pdo->prepare($sql);
-$args = [];
-$args[":uid"] = $uid;
-$args[":name"] = $name;
-$args[":description"] = $description;
-$args[":photo"] = $photoPath;
-$r = $stmt->execute($args);
 ?>
+
 <pre>
 
-name=<?=$name?>
+<?php
+$uid = $_SESSION['uid'];
+if (!$uid)
+{
+	echo "No user id set\n";
+	$url = "addItem.php";
+}
+else
+{
+	$description = $_POST['description'];
+	$filename = $_FILES['photo']['name'];
+	$tmp_name = $_FILES['photo']['tmp_name'];
+	$size = $_FILES['photo']['size'];
+	$type = $_FILES['photo']['type'];
+	$error = $_FILES['photo']['error'];
+	$parent = "../photos/$uid";
+	if (!file_exists($parent))
+	{
+		mkdir($parent);
+	}
+	$destFileName = tempnam($parent, "") . ".$filename";
+	move_uploaded_file($tmp_name, $destFileName);
 
-description=<?=$description?>
+	$parent = realpath("..");
+	$nParent = strlen($parent);
+	$photoPath = substr($destFileName, $nParent);
 
-filename=<?=$filename?>
+	echo "destFileName=$destFileName\n";
+	echo "parent=$parent\n";
+	echo "nParent=$nParent\n";
+	echo "photoPath=$photoPath\n";
 
-size=<?=$size?>
+	$sql = "INSERT INTO item set uid=:uid, name=:name, description=:description, photo=:photo";
+	$dao = new Dao($debug);
+	$stmt = $dao->pdo->prepare($sql);
+	$args = [];
+	$args[":uid"] = $uid;
+	$args[":name"] = $name;
+	$args[":description"] = $description;
+	$args[":photo"] = $photoPath;
+	$r = $stmt->execute($args);
+	$url = "addItem.php";
+	?>
 
-type=<?=$type?>
+	name=<?=$name?>
 
-tmp_name=<?=$tmp_name?>
+	description=<?=$description?>
 
-error=<?=$error?>
+	filename=<?=$filename?>
 
-destFileName=<?=$destFileName?>
+	size=<?=$size?>
 
-r=<?=$r?>
+	type=<?=$type?>
+
+	tmp_name=<?=$tmp_name?>
+
+	error=<?=$error?>
+
+	destFileName=<?=$destFileName?>
+
+	r=<?=$r?>
+	
+<?php
+}
+
+redirect($url, $debug);
+?>
+
 
 </pre>

@@ -36,6 +36,21 @@ class Dao
 	}
 
 
+	function getAllUsers ($orderBy = NULL, $debug=0)
+	{
+		$sql = "SELECT * FROM user";
+		if ($orderBy)
+		{
+			$sql = $sql . " ORDER BY $orderBy";
+		}
+		
+		$rs = query($this->pdo, $sql, $debug);
+		$users = $rs->fetchAll();
+		
+		return $users;
+	}
+	
+	
 	function getCart ($idUser, $debug=0)
 	{
 		$sql = <<<SQL

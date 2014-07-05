@@ -1,5 +1,34 @@
 <?php
+require_once("../Dao.cls.php");
+$dao = new Dao();
 $title = "Add Item";
+
+function getUserSelect ($dao)
+{
+	global $debug;
+	
+	$s = "<select name='uid'>";
+	$users = $dao->getAllUsers("email", $debug);
+	foreach ($users as $user)
+	{
+		$option = "<option value='$user->uid'>$user->email</option>";
+		$s = $s . $option;
+	}
+	$s = $s . "</select>";
+	
+	return $s;
+}
+
+
+function selectUserForm ($dao)
+{
+	$userSelect = getUserSelect($dao);
+	echo <<< S
+<form action='selectUserAction.php' method='post'>
+$userSelect <input type='submit' value='Set User'/>
+</form>
+S;
+}
 ?>
 <html>
 <head>
@@ -10,7 +39,7 @@ $title = "Add Item";
 </head>
 <body>
 	<div id='header'>
-		<?= $title ?>
+		<?= $title ?> <?php selectUserForm($dao) ?>
 		<br/><p/>
 	</div>
 	<div id='content'>
