@@ -1,0 +1,3 @@
+class MbcException extends Exception
+{
+}
