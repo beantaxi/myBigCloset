@@ -37,7 +37,7 @@ $title = "$user->first's Closet";
 		<br/><p/>
 	</div>
 
-	<div class style="background-color: white; width: 80%;"/>
+	<div id='content'/>
 	<!-- table of items and descriptions -->
 	<table>
 	<?php

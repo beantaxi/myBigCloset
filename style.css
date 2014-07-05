@@ -7,25 +7,23 @@ PURPOSE: style for storage
 
 body {
     text-align: left;
-    margin: auto;
+    margin: 0px 40px 0px 40px;
     font-size: 16px;
     font-family: Garamond;
     line-height: 23px;
     font-weight: 400;
 /*  background-color: #97BF69;*/
     background-image:url("green-background-images-hd-1.jpg");
-    width: 80%;
     color: black;
     }
 
-div{
-  display: block;
-}
-
+/*
 element.style{
   height: 100%;
   background-color: #dddddd;
 }
+*/
+
 
 .standardForm
 {
@@ -35,7 +33,6 @@ element.style{
 #content
 {
 	background-color: white; 
-	width: 80%;
 }
 
 

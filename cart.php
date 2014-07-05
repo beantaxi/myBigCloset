@@ -30,18 +30,27 @@ $title = "$user->first's Cart";
 			<?= $title ?>
 			<br/><p/>
 	</div>
-   <div id='content'>
+ 	<div id='content'>
 		<form class='standardForm' action='shipCartAction.php' method='post'>
 			<table>
 			<?php
-			foreach ($cart as $item)
+			if (count($cart) == 0)
 			{
-				echo "<tr> <td><img src='$item->photo' alt='Item Image' height='42' width='42'/></td> <td>$item->name</td> <td>$item->description</td> </tr>";
+				echo "Your cart is empty, $user->first<br/><p/>";
+			}
+			else
+			{
+				foreach ($cart as $item)
+				{
+					echo "<tr> <td><img src='$item->photo' alt='Item Image' height='42' width='42'/></td> <td>$item->name</td> <td>$item->description</td> </tr>";
+				}
+				?>
+				</table>
+				<input type='submit' value='Ship It!'/>
+				<input type='hidden' name='uid' value='<?= $uid ?>'/>
+			<?php
 			}
 			?>
-			</table>
-			<input type='submit' value='Ship It!'/>
-			<input type='hidden' name='uid' value='<?= $uid ?>'/>
 		</form>
 		<br/><p/>
 		<?= "<a href='closet.php?id=$uid'>Return to your Closet</a>" ?><br> <!-- return to Closet -->
