@@ -6,12 +6,20 @@ $title = "Add Item";
 function getUserSelect ($dao)
 {
 	global $debug;
+	global $_SESSION;
+	session_start();
+	$uid = $_SESSION['uid'];
 	
 	$s = "<select name='uid'>";
 	$users = $dao->getAllUsers("email", $debug);
 	foreach ($users as $user)
 	{
-		$option = "<option value='$user->uid'>$user->email</option>";
+		$option = "<option value='$user->uid'";
+		if ($user->uid == $uid)
+		{
+			$option .= " selected";
+		}
+		$option .= ">$user->email</option>";
 		$s = $s . $option;
 	}
 	$s = $s . "</select>";

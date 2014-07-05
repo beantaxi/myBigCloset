@@ -8,13 +8,12 @@ PURPOSE: style for admin pages
 body 
 {
 	text-align: left;
-	margin: auto;
+	margin: 0px 40px 0px 40px;
 	font-size: 16px;
 	font-family: Garamond;
 	line-height: 23px;
 	font-weight: 400;
 	background-color: gray;
-	width: 80%;
 	color: black;
 }
 
@@ -22,7 +21,6 @@ body
 #content
 {
 	background-color: white; 
-	width: 80%;
 }
 
 

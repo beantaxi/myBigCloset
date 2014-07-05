@@ -1,77 +1,88 @@
 <?php
 session_start();
 require("../Dao.cls.php");
+$debug = 1;
 $name = $_POST['name'];
 ?>
 
 <pre>
 
 <?php
-$uid = $_SESSION['uid'];
-if (!$uid)
+try
 {
-	echo "No user id set\n";
-	$url = "addItem.php";
-}
-else
-{
-	$description = $_POST['description'];
-	$filename = $_FILES['photo']['name'];
-	$tmp_name = $_FILES['photo']['tmp_name'];
-	$size = $_FILES['photo']['size'];
-	$type = $_FILES['photo']['type'];
-	$error = $_FILES['photo']['error'];
-	$parent = "../photos/$uid";
-	if (!file_exists($parent))
+	$uid = $_SESSION['uid'];
+	if (!$uid)
 	{
-		mkdir($parent);
+		throw new Exception("No user id set");
 	}
-	$destFileName = tempnam($parent, "") . ".$filename";
-	move_uploaded_file($tmp_name, $destFileName);
+	else if (!$_FILES['photo']['name'])
+	{
+		throw new Exception("No photo uploaded");
+	}
+	else 
+	{
+		$url = "addItem.php";
+		redirect($url, $debug);
+		$description = $_POST['description'];
+		$filename = $_FILES['photo']['name'];
+		$tmp_name = $_FILES['photo']['tmp_name'];
+		$size = $_FILES['photo']['size'];
+		$type = $_FILES['photo']['type'];
+		$error = $_FILES['photo']['error'];
+		$parent = "../photos/$uid";
+		if (!file_exists($parent))
+		{
+			mkdir($parent);
+		}
+		$destFileName = tempnam($parent, "") . ".$filename";
+		move_uploaded_file($tmp_name, $destFileName);
 
-	$parent = realpath("..");
-	$nParent = strlen($parent);
-	$photoPath = substr($destFileName, $nParent);
+		$parent = realpath("..");
+		$nParent = strlen($parent);
+		$photoPath = substr($destFileName, $nParent);
 
-	echo "destFileName=$destFileName\n";
-	echo "parent=$parent\n";
-	echo "nParent=$nParent\n";
-	echo "photoPath=$photoPath\n";
+		echo "destFileName=$destFileName\n";
+		echo "parent=$parent\n";
+		echo "nParent=$nParent\n";
+		echo "photoPath=$photoPath\n";
 
-	$sql = "INSERT INTO item set uid=:uid, name=:name, description=:description, photo=:photo";
-	$dao = new Dao($debug);
-	$stmt = $dao->pdo->prepare($sql);
-	$args = [];
-	$args[":uid"] = $uid;
-	$args[":name"] = $name;
-	$args[":description"] = $description;
-	$args[":photo"] = $photoPath;
-	$r = $stmt->execute($args);
-	$url = "addItem.php";
-	?>
+		$sql = "INSERT INTO item set uid=:uid, name=:name, description=:description, photo=:photo";
+		$dao = new Dao($debug);
+		$stmt = $dao->pdo->prepare($sql);
+		$args = [];
+		$args[":uid"] = $uid;
+		$args[":name"] = $name;
+		$args[":description"] = $description;
+		$args[":photo"] = $photoPath;
+		$r = $stmt->execute($args);
+		?>
 
-	name=<?=$name?>
+		name=<?=$name?>
 
-	description=<?=$description?>
+		description=<?=$description?>
 
-	filename=<?=$filename?>
+		filename=<?=$filename?>
 
-	size=<?=$size?>
+		size=<?=$size?>
 
-	type=<?=$type?>
+		type=<?=$type?>
 
-	tmp_name=<?=$tmp_name?>
+		tmp_name=<?=$tmp_name?>
 
-	error=<?=$error?>
+		error=<?=$error?>
 
-	destFileName=<?=$destFileName?>
+		destFileName=<?=$destFileName?>
 
-	r=<?=$r?>
-	
-<?php
+		r=<?=$r?>
+
+	<?php
+	}
 }
-
-redirect($url, $debug);
+catch (Exception $ex)
+{
+	echo $ex->getMessage() . "\n\n";
+	echo "Return to <a href='addItem.php'>Add Item</a>";
+}
 ?>
 
 
